@@ -2,6 +2,8 @@
 
 set -e
 set -x
+PLUGIN_NAME=`cut -d'/' -f2 ${TRAVIS_REPO_SLUG}`
+PLUGIN_VERSION=${TRAVIS_BRANCH}
 
 # XXX workaround build failure of the box
 if [ -f /usr/local/etc/pkg/repos/local.conf ]; then
