@@ -33,11 +33,12 @@ script:
   - gem install sensu-plugins-http-*.gem
   - bundle exec rake quick
   - bundle exec rake kitchen:ruby-`echo $TRAVIS_RUBY_VERSION | sed -e "s/\.//g"`-debian-8
-  - mkdir dest
+  - export DEST_DIR="dest-`echo ${VAGRANT_BOX} | cut -d'/' -f2`"
+  - mkdir ${DEST_DIR}
   - build-in-vagrant-box/bin/up.sh ${VAGRANT_BOX}
   - build-in-vagrant-box/bin/run.sh build.sh "TRAVIS_BRANCH=${TRAVIS_BRANCH} TRAVIS_REPO_SLUG=${TRAVIS_REPO_SLUG}"
-  - build-in-vagrant-box/bin/download.sh dest
-  - ls -alh dest
+  - build-in-vagrant-box/bin/download.sh ${DEST_DIR}
+  - ls -alh ${DEST_DIR}
 env:
   global:
     - KITCHEN_LOCAL_YAML=.kitchen.travis.yml
