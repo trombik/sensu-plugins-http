@@ -42,7 +42,7 @@ ARCHIVE_FILE_EXT=".tar.gz"
 mkdir work
 tee work/Gemfile <<__EOF__
 source 'https://rubygems.org'
-gem "${PLUGIN_NAME}", git: "https://github.com/${TRAVIS_REPO_SLUG}", ref: "${TRAVIS_COMMIT}"
+gem "${PLUGIN_NAME}", git: "https://github.com/${TRAVIS_REPO_SLUG}", ref: "${TRAVIS_BRANCH}"
 __EOF__
 
 (

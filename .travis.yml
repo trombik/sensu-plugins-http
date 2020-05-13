@@ -35,7 +35,7 @@ script:
   - bundle exec rake kitchen:ruby-`echo $TRAVIS_RUBY_VERSION | sed -e "s/\.//g"`-debian-8
   - mkdir dest
   - build-in-vagrant-box/bin/up.sh ${VAGRANT_BOX}
-  - build-in-vagrant-box/bin/run.sh build.sh "TRAVIS_COMMIT=${TRAVIS_COMMIT} TRAVIS_REPO_SLUG=${TRAVIS_REPO_SLUG}"
+  - build-in-vagrant-box/bin/run.sh build.sh "TRAVIS_BRANCH=${TRAVIS_BRANCH} TRAVIS_REPO_SLUG=${TRAVIS_REPO_SLUG}"
   - build-in-vagrant-box/bin/download.sh dest
   - ls -alh dest
 env:
