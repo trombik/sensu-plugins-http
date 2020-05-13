@@ -5,7 +5,8 @@ language: ruby
 cache:
   - bundler
 before_install:
-  - gem install bundler -v 1.15
+  - yes | gem update --system --force
+  - gem install bundler
   - git clone https://github.com/trombik/build-in-vagrant-box
   - build-in-vagrant-box/bin/before_install.sh
 addons:
@@ -22,9 +23,6 @@ addons:
       - qemu-kvm
       - qemu-utils
       - ruby-dev
-before_install:
-  - git clone https://github.com/trombik/build-in-vagrant-box
-  - build-in-vagrant-box/bin/before_install.sh
 install:
   - bundle install
 rvm:
