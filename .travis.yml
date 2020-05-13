@@ -44,4 +44,6 @@ env:
     - KITCHEN_LOCAL_YAML=.kitchen.travis.yml
   jobs:
     - VAGRANT_BOX=trombik/ansible-freebsd-12.1-amd64
+    - VAGRANT_BOX=trombik/ansible-openbsd-6.6-amd64
     - VAGRANT_BOX=trombik/ansible-ubuntu-18.04-amd64
+    - VAGRANT_BOX=trombik/ansible-centos-7.4-x86_64
