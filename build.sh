@@ -38,7 +38,7 @@ ARCHIVE_FILE_NAME="${PLUGIN_NAME}_${PLUGIN_VERSION}_${ANSIBLE_DISTRIBUTION}_${AN
 ARCHIVE_FILE_EXT=".tar.gz"
 
 mkdir work
-tee work/Gemfile <__EOF__
+tee work/Gemfile <<__EOF__
 source 'https://rubygems.org'
 gem "${PLUGIN_NAME}", git: "https://github.com/${TRAVIS_REPO_SLUG}", ref: "${TRAVIS_COMMIT}"
 __EOF__
