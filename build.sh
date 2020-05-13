@@ -2,7 +2,7 @@
 
 set -e
 set -x
-PLUGIN_NAME=`cut -d'/' -f2 ${TRAVIS_REPO_SLUG}`
+PLUGIN_NAME=`echo ${TRAVIS_REPO_SLUG} | cut -d'/' -f2`
 PLUGIN_VERSION=${TRAVIS_BRANCH}
 
 # XXX workaround build failure of the box
