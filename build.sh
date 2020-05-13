@@ -50,6 +50,6 @@ __EOF__
 
 (
     cd work
-    bundle install --path=lib/ --binstubs=bin/ --standalone
+    ${BUNDLER_CMD} install --path=lib/ --binstubs=bin/ --standalone
 )
 tar -czf ${ARCHIVE_FILE_NAME}${ARCHIVE_FILE_EXT} -C work .
