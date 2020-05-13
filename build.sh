@@ -5,7 +5,7 @@ set -x
 
 # XXX workaround build failure of the box
 if [ -f /usr/local/etc/pkg/repos/local.conf ]; then
-    rm -f /usr/local/etc/pkg/repos/local.conf
+    sudo rm -f /usr/local/etc/pkg/repos/local.conf
 fi
 if which yum; then
     sudo yum install -y epel-release
