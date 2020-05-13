@@ -41,6 +41,6 @@ script:
 env:
   global:
     - KITCHEN_LOCAL_YAML=.kitchen.travis.yml
-  matrix:
+  jobs:
     - VAGRANT_BOX=trombik/ansible-freebsd-12.1-amd64
     - VAGRANT_BOX=trombik/ansible-ubuntu-18.04-amd64
