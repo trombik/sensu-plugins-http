@@ -3,6 +3,10 @@
 set -e
 set -x
 
+# XXX workaround build failure of the box
+if [ -f /usr/local/etc/pkg/repos/local.conf ]; then
+    rm /usr/local/etc/pkg/repos/local.conf
+fi
 if which yum; then
     sudo yum install -y epel-release
     sudo yum install -y git ruby-dev jq rubygem-bundler
