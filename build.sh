@@ -11,8 +11,9 @@ if [ -f /usr/local/etc/pkg/repos/local.conf ]; then
     sudo rm -f /usr/local/etc/pkg/repos/local.conf
 fi
 if which yum; then
+    TOOLCHAINS="autoconf automake binutils bison flex gcc gcc-c++ gettext libtool make patch pkgconfig"
     sudo yum install -y epel-release
-    sudo yum install -y git ruby-devel jq rubygem-bundler
+    sudo yum install -y git ruby-devel jq rubygem-bundler ${TOOLCHAINS}
 fi
 if which pkg; then
     sudo pkg install -y devel/git lang/ruby26 devel/ruby-gems textproc/jq sysutils/rubygem-bundler
