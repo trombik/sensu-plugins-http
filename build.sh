@@ -5,6 +5,7 @@ set -x
 PLUGIN_NAME=`echo ${TRAVIS_REPO_SLUG} | cut -d'/' -f2`
 PLUGIN_VERSION=${TRAVIS_BRANCH}
 
+BUNDLER_CMD="bundle"
 # XXX workaround build failure of the box
 if [ -f /usr/local/etc/pkg/repos/local.conf ]; then
     sudo rm -f /usr/local/etc/pkg/repos/local.conf
@@ -22,6 +23,7 @@ if which apt-get; then
 fi
 if which pkg_add; then
     sudo pkg_add git jq ruby25-bundler
+    BUNDLER_CMD="bundle25"
 fi
 
 ansible -m setup localhost | sed -e 's/^localhost | SUCCESS =>//' | jq '.ansible_facts' > ansible_facts
