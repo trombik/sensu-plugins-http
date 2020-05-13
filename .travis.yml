@@ -28,8 +28,8 @@ before_install:
 install:
   - bundle install
 rvm:
-  - 2.3.0
-  - 2.4.1
+  - 2.4.9
+  - 2.6.5
 script:
   - gem build sensu-plugins-http.gemspec
   - gem install sensu-plugins-http-*.gem
