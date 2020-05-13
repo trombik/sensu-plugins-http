@@ -12,7 +12,7 @@ if which yum; then
     sudo yum install -y git ruby-dev jq rubygem-bundler
 fi
 if which pkg; then
-    sudo pkg install -y devel/git lang/ruby devel/ruby-gems textproc/jq sysutils/rubygem-bundler
+    sudo pkg install -y devel/git lang/ruby26 devel/ruby-gems textproc/jq sysutils/rubygem-bundler
 fi
 if which apt-get then
     sudo apt-get update
