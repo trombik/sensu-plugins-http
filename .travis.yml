@@ -1,48 +1,49 @@
-sudo: required
+---
+os: linux
+dist: bionic
 language: ruby
-services:
-- docker
 cache:
-- bundler
+  - bundler
 before_install:
-  - sudo iptables -L DOCKER || ( echo "DOCKER iptables chain missing" ; sudo iptables -N DOCKER )
-  - gem install bundler -v 1.15
+  - yes | gem update --system --force
+  - gem install bundler
+  - git clone https://github.com/trombik/build-in-vagrant-box
+  - build-in-vagrant-box/bin/before_install.sh
+addons:
+  apt:
+    update: true
+    packages:
+      - python-pip
+      - curl
+      - bridge-utils
+      - dnsmasq-base
+      - ebtables
+      - libvirt-bin
+      - libvirt-dev
+      - qemu-kvm
+      - qemu-utils
+      - ruby-dev
 install:
-- bundle install
+  - bundle install
 rvm:
-- 2.3.0
-- 2.4.1
-notifications:
-  email:
-    recipients:
-    - sensu-plugin@sensu-plugins.io
-    on_success: change
-    on_failure: always
+  - 2.4.9
+  - 2.6.5
 script:
   - gem build sensu-plugins-http.gemspec
   - gem install sensu-plugins-http-*.gem
   - bundle exec rake quick
   - bundle exec rake kitchen:ruby-`echo $TRAVIS_RUBY_VERSION | sed -e "s/\.//g"`-debian-8
-before_deploy:
-- bash -c "[ ! -d bonsai/ ] && git clone https://github.com/sensu/sensu-go-bonsai-asset.git bonsai || echo 'bonsai/ exists, skipping git clone'; cp asset_build_scripts/Dockerfile.* bonsai/ruby-runtime/"
-deploy:
-- provider: rubygems
-  api_key:
-    secure: gEAG8w7v8luKjpTp1NvNQ3qMUoGpfsNWmBByhwXq+A/B2KeaLd5UnUSEFJIK2JkxLkTr1rIpiWxBQmuHKN+RReJm8nij0Awt+oHLKruWw3rOht+fnlXHlI67njbXwnmQPuG44SOX5tqesWzwMBd35dIrYNJyygvwSlDXIOQtHUA=
-  gem: sensu-plugins-http
-  on:
-    tags: true
-    all_branches: true
-    rvm: 2.3.0
-    rvm: 2.4.1
-    repo: sensu-plugins/sensu-plugins-http
-- provider: script
-  script: bonsai/ruby-runtime/travis-build-ruby-plugin-assets.sh sensu-plugins-http
-  skip_cleanup: true
-  on:
-    tags: true
-    all_branches: true
-    rvm: 2.4.1
+  - export DEST_DIR="dest-`echo ${VAGRANT_BOX} | cut -d'/' -f2`"
+  - mkdir ${DEST_DIR}
+  - build-in-vagrant-box/bin/up.sh ${VAGRANT_BOX}
+  - build-in-vagrant-box/bin/run.sh build.sh "TRAVIS_BRANCH=${TRAVIS_BRANCH} TRAVIS_REPO_SLUG=${TRAVIS_REPO_SLUG}"
+  - build-in-vagrant-box/bin/download.sh ${DEST_DIR}
+  - ls -alh ${DEST_DIR}
 env:
   global:
     - KITCHEN_LOCAL_YAML=.kitchen.travis.yml
+  jobs:
+    - VAGRANT_BOX=trombik/ansible-freebsd-12.1-amd64
+    - VAGRANT_BOX=trombik/ansible-openbsd-6.5-amd64
+    - VAGRANT_BOX=trombik/ansible-ubuntu-18.04-amd64
+    - VAGRANT_BOX=trombik/ansible-centos-7.4-x86_64
