@@ -23,7 +23,7 @@ if which apt-get; then
     sudo apt-get install -y git ruby-dev jq ruby-bundler
 fi
 if which pkg_add; then
-    sudo pkg_add git jq ruby25-bundler gtar
+    sudo pkg_add git jq ruby25-bundler gtar--
     mv /bin/tar /bin/tar.orig
     ln -s /ust/local/bin/gtar /bin/tar
     BUNDLER_CMD="bundle25"
